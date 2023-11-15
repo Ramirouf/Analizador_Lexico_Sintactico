@@ -9,8 +9,8 @@
 %}
 
 /* DECLARACIONES ELEMENTALES */
-CORCHETE_ABIERTO    ["["]
-CORCHETE_CERRADO    ["]"]
+CORCHETE_ABIERTO    "["
+CORCHETE_CERRADO    "]"
 DIGITO              [0-9]
 PUNTO               ["."]
 
@@ -28,13 +28,25 @@ FLOAT               "float"
 STRING              "string"
 CHAR                "char"
 
+/* En el return nos tira un warning, si retornas yytext no tira el warnig */
+/* El prinf lo coloque solo para verificar si retorna el token correcto despues deberiamos sacarlo*/
 %%
-
-{FLOTANTE}      {funct_val_float_rango(yytext); return "FLOTANTE";}
-{FLOAT}         {return "FLOAT";}
-{ENTERO}        {funct_val_integer_rango(yytext); return "INT";}
-{INT}           {return "INT";}
-
+{FLOTANTE}          {funct_val_float_rango(yytext); printf("\nFLOTANTE\n");return "FLOTANTE";}
+{FLOAT}             {printf("\nFLOAT_PR\n");return "FLOAT_PR"\n;}
+{ENTERO}            {funct_val_integer_rango(yytext); printf("\nINT");return "INT";}
+{INT}               {printf("\nINT_PR\n");return "INT_PR";}
+{CARACTER}          {printf("\nCHAR\n");return "CHAR";}
+{CHAR}              {printf("\nCHAR_PR\n");return "CHAR_PR";}
+{CADENA}            {printf("\nCADENA\n");return "CADENA";}
+{STRING}            {printf("\nSTRING_PR\n");return "STRING_PR";}
+{CORCHETE_ABIERTO}  {printf("\nCORCHETE_ABIERTO\n");return "CORCHETE_ABIERTO";}
+{CORCHETE_CERRADO}  {printf("\nCORCHETE_CERRADO\n");return "CORCHETE_CERRADO";}
+{IDENTIFICADOR}     {printf("\nIDENTIFICADOR\n");return "IDENTIFICADOR";}
+{PUNTO_Y_COMA}      {printf("\nPUNTO_Y_COMA\n");return "PUNTO_Y_COMA";}
+" "
+"\n"
+"\t"
+"." yyerror();
 %%
 
 int main(int argc, char *argv[]){
