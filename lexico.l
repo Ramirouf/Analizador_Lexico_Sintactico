@@ -2,15 +2,19 @@
 %{
 	#include<stdio.h>
     #include<float.h> // Para los rangos del flotante
+    #include"y.tab.h"
     FILE *yyin;
     int funct_val_integer_rango(char*ptr);
     int funct_val_float_rango(char*ptr);
-    int yyerror(void);
+    int yyerror_lexico(void);
 %}
 
 /* DECLARACIONES ELEMENTALES */
 CORCHETE_ABIERTO    "["
 CORCHETE_CERRADO    "]"
+LLAVE_ABIERTA       "{"
+LLAVE_CERRADA       "}"
+IGUAL               "="
 DIGITO              [0-9]
 PUNTO               ["."]
 
@@ -31,22 +35,25 @@ CHAR                "char"
 /* En el return nos tira un warning, si retornas yytext no tira el warnig */
 /* El prinf lo coloque solo para verificar si retorna el token correcto despues deberiamos sacarlo*/
 %%
-{FLOTANTE}          {funct_val_float_rango(yytext); printf("\nFLOTANTE\n");return "FLOTANTE";}
-{FLOAT}             {printf("\nFLOAT_PR\n");return "FLOAT_PR"\n;}
-{ENTERO}            {funct_val_integer_rango(yytext); printf("\nINT");return "INT";}
-{INT}               {printf("\nINT_PR\n");return "INT_PR";}
-{CARACTER}          {printf("\nCHAR\n");return "CHAR";}
-{CHAR}              {printf("\nCHAR_PR\n");return "CHAR_PR";}
-{CADENA}            {printf("\nCADENA\n");return "CADENA";}
-{STRING}            {printf("\nSTRING_PR\n");return "STRING_PR";}
-{CORCHETE_ABIERTO}  {printf("\nCORCHETE_ABIERTO\n");return "CORCHETE_ABIERTO";}
-{CORCHETE_CERRADO}  {printf("\nCORCHETE_CERRADO\n");return "CORCHETE_CERRADO";}
-{IDENTIFICADOR}     {printf("\nIDENTIFICADOR\n");return "IDENTIFICADOR";}
-{PUNTO_Y_COMA}      {printf("\nPUNTO_Y_COMA\n");return "PUNTO_Y_COMA";}
+{FLOTANTE}          {funct_val_float_rango(yytext);return FLOTANTE;}
+{FLOAT}             {return TYPE_FLOAT;}
+{ENTERO}            {funct_val_integer_rango(yytext); return INT;}
+{INT}               {return TYPE_INT;}
+{CARACTER}          {return CHAR;}
+{CHAR}              {return TYPE_CHAR;}
+{CADENA}            {return STRING;}
+{STRING}            {return TYPE_STRING;}
+{CORCHETE_ABIERTO}  {return CORCHETE_ABIERTO;}
+{CORCHETE_CERRADO}  {return CORCHETE_CERRADO;}
+{LLAVE_ABIERTA}     {return LLAVE_ABIERTA;}
+{LLAVE_CERRADA}     {return LLAVE_CERRADA;}
+{IDENTIFICADOR}     {return IDENTIFICADOR;}
+{PUNTO_Y_COMA}      {return PUNTO_Y_COMA;}
+{IGUAL}             {return IGUAL;}
 " "
 "\n"
 "\t"
-"." yyerror();
+"." yyerror_lexico();
 %%
 
 int main(int argc, char *argv[]){
@@ -63,11 +70,12 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+
 int funct_val_integer_rango(char*ptr){
     int value = atoi(ptr);
     if(value < -32768 || value > 32767){
         printf("\n¡ERROR! VARIABLE FUERA DE RANGO: %s\n", yytext);
-        return yyerror();
+        return yyerror_lexico();
     }
     return 0;
 }
@@ -76,12 +84,12 @@ int funct_val_float_rango(char*ptr){
     float value = atof(ptr);
     if(value < FLT_MIN || value > FLT_MAX){
         printf("\n¡ERROR! VARIABLE FUERA DE RANGO: %s\n", yytext);
-        return yyerror();
+        return yyerror_lexico();
     }
     return 0;
 }
 
-int yyerror(void){
+int yyerror_lexico(void){
     printf("\nERROR DE LEXICO: CARACTER (%s) NO VALIDO. FINALIZANDO...\n", yytext);
     exit(1);
 }

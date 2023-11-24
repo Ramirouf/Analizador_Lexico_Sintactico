@@ -1,1 +1,29 @@
-float
+int prueba_vector_1[3];
+string prueba_vector_2[1];
+float prueba_vector_3[4];
+char prueba_vector_4[5];
+
+int prueba_vector_1[3] = {1};
+string prueba_vector_2[1] = {"prueba"};
+float prueba_vector_3[4] = {2.2};
+char prueba_vector_4[5] = {'g'};
+
+prueba_vector_1[0] = 1;
+prueba_vector_2[1] = "prueba";
+prueba_vector_3[2] = 2.2;
+prueba_vector_4[0] = 'g';
+
+int prueba_matriz_1[3][3];
+string prueba_matriz_2[1][1];
+float prueba_matriz_3[2][2];
+char prueba_matriz_4[4][4];
+
+int prueba_matriz_1[3][3] = {{1}};
+string prueba_matriz_2[1][1] = {{"prueba"}};
+float prueba_matriz_3[2][2] = {{2.2}};
+char prueba_matriz_4[4][4] = {{'g'}};
+
+prueba_matriz_1[0][0] = 1;
+prueba_matriz_2[0][1] = "prueba";
+prueba_matriz_3[1][1] = 2.2;
+prueba_matriz_4[0][0] = 'g';
