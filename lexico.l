@@ -1,4 +1,3 @@
-%option noyywrap
 %{
 	#include<stdio.h>
     #include<float.h> // Para los rangos del flotante
@@ -7,6 +6,8 @@
     int funct_val_integer_rango(char*ptr);
     int funct_val_float_rango(char*ptr);
     int yyerror_lexico(void);
+    int yywrap(); //se agrego pero no se si esta bien
+    int yylex(); //lo mismo esto
 %}
 
 /* DECLARACIONES ELEMENTALES */
@@ -55,6 +56,8 @@ CHAR                "char"
 "\t"
 "." yyerror_lexico();
 %%
+
+int yywrap(){} //no se si esta bien
 
 int main(int argc, char *argv[]){
     if((yyin=fopen(argv[1], "rt")) == NULL){
