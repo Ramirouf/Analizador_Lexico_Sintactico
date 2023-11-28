@@ -35,9 +35,7 @@ CHAR                "char"
 /* En el return nos tira un warning, si retornas yytext no tira el warnig */
 /* El prinf lo coloque solo para verificar si retorna el token correcto despues deberiamos sacarlo*/
 %%
-" "
-"\n" {linea+=1;}
-"\t"
+
 {FLOTANTE}          {funct_val_float_rango(yytext);return FLOTANTE;}
 {FLOAT}             {return TYPE_FLOAT;}
 {ENTERO}            {funct_val_integer_rango(yytext); return INT;}
@@ -53,7 +51,9 @@ CHAR                "char"
 {IDENTIFICADOR}     {return IDENTIFICADOR;}
 {PUNTO_Y_COMA}      {return PUNTO_Y_COMA;}
 {IGUAL}             {return IGUAL;}
-
+" "
+"\n" {linea+=1;}
+"\t"
 "." yyerror_lexico();
 %%
 
