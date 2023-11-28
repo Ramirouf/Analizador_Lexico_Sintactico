@@ -27,7 +27,7 @@
 %type <flotante> ASSIGNMENT_FLOAT
 
 %%
-INPUT                : /* empty */
+INPUT                :
     |                  INPUT DECLARATION_VECTORES PUNTO_Y_COMA 
     |                  INPUT DECLARATION_MATICES  PUNTO_Y_COMA 
     |                  INPUT ASSIGNMENT_CAD       PUNTO_Y_COMA 
