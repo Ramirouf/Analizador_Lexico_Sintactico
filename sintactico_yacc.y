@@ -1,7 +1,8 @@
 %{
-void yyerror(char *s);
-#include <stdio.h>
-int yyparse(); //no se si esta bien
+    void yyerror(char *s);
+    #include <stdio.h>
+    int yyparse(); //no se si esta bien
+    int yylex();
 %}
 
 %union{

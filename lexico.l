@@ -26,7 +26,7 @@ CARACTER            [a-zA-Z]
 CADENA              \"[^\n"]*\"
 PUNTO_Y_COMA        ";"
 
- /* PALABRAS RESERVADAS */
+/* PALABRAS RESERVADAS */
 
 INT                 "int"
 FLOAT               "float"
