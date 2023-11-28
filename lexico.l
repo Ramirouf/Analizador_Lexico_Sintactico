@@ -1,13 +1,11 @@
 %{
 	#include<stdio.h>
+    #include <string.h>
     #include<float.h> // Para los rangos del flotante
-    #include"y.tab.h"
-    FILE *yyin;
+    #include"sintactico_yacc.tab.h"
     int funct_val_integer_rango(char*ptr);
     int funct_val_float_rango(char*ptr);
     int yyerror_lexico(void);
-    int yywrap(); //se agrego pero no se si esta bien
-    int yylex(); //lo mismo esto
 %}
 
 /* DECLARACIONES ELEMENTALES */
@@ -52,27 +50,14 @@ CHAR                "char"
 {PUNTO_Y_COMA}      {return PUNTO_Y_COMA;}
 {IGUAL}             {return IGUAL;}
 " "
-"\n"
+"\n" {return yytext[0];}
 "\t"
 "." yyerror_lexico();
 %%
 
-int yywrap(){} //no se si esta bien
-
-int main(int argc, char *argv[]){
-    if((yyin=fopen(argv[1], "rt")) == NULL){
-        printf("\nNo se puede abrir el archivo: %s\n",argv[1]);
-        return 1;
-    }
-    else{
-        printf("\nEL archivo %s se abrio correctamente\n",argv[1]);
-        yylex();
-    }
-    printf("\nFLEX finalizo la lectura del archivo %s\n",argv[1]);
-    fclose(yyin);
-    return 0;
+int yywrap(){
+    return 1;
 }
-
 
 int funct_val_integer_rango(char*ptr){
     int value = atoi(ptr);

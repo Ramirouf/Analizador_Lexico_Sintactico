@@ -1,8 +1,9 @@
 %{
     void yyerror(char *s);
     #include <stdio.h>
-    int yyparse(); //no se si esta bien
+    extern FILE *yyin;
     int yylex();
+    
 %}
 
 %union{
@@ -25,53 +26,64 @@
 %type <flotante> ASSIGNMENT_FLOAT
 
 %%
-INPUT                : DECLARATION_VECTORES PUNTO_Y_COMA
-    |                  DECLARATION_MATICES  PUNTO_Y_COMA
-    |                  ASSIGNMENT_CAD       PUNTO_Y_COMA
-    |                  ASSIGNMENT_CAR       PUNTO_Y_COMA
-    |                  ASSIGNMENT_INT       PUNTO_Y_COMA
-    |                  ASSIGNMENT_FLOAT     PUNTO_Y_COMA
+INPUT                : /* empty */
+    |                  INPUT DECLARATION_VECTORES PUNTO_Y_COMA '\n'
+    |                  INPUT DECLARATION_MATICES  PUNTO_Y_COMA '\n'
+    |                  INPUT ASSIGNMENT_CAD       PUNTO_Y_COMA '\n'
+    |                  INPUT ASSIGNMENT_CAR       PUNTO_Y_COMA '\n'
+    |                  INPUT ASSIGNMENT_INT       PUNTO_Y_COMA '\n'
+    |                  INPUT ASSIGNMENT_FLOAT     PUNTO_Y_COMA '\n'
     ;
 
-DECLARATION_VECTORES : TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA CHAR LLAVE_CERRADA {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA INT LLAVE_CERRADA {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA FLOTANTE LLAVE_CERRADA {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector valido");}
-    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA STRING LLAVE_CERRADA {printf("\nDeclaracion de vector valido");}
+DECLARATION_VECTORES : TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector tipo char valido sin colocar datos\n");}
+    |                  TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA CHAR LLAVE_CERRADA {printf("\nDeclaracion de vector tipo char valido agregando el primer dato\n");}
+    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector tipo int valido sin colocar datos\n");}
+    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA INT LLAVE_CERRADA {printf("\nDeclaracion de vector tipo int valido agregando el primer dato\n");}
+    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector tipo flotante valido sin colocar datos\n");}
+    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA FLOTANTE LLAVE_CERRADA {printf("\nDeclaracion de vector tipo flotante valido agregando el primer dato\n");}
+    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de vector tipo string valido sin colocar datos\n");}
+    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA STRING LLAVE_CERRADA {printf("\nDeclaracion de vector tipo string valido agregando el primer dato\n");}
     ;
 
-DECLARATION_MATICES  : TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA CHAR LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA INT LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA FLOTANTE LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz valida");}
-    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA STRING LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matriz valida");}
+DECLARATION_MATICES  : TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz tipo char valida sin colocar datos\n");}
+    |                  TYPE_CHAR    IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA CHAR LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matiz tipo char valida agregando el primer dato\n");}
+    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz tipo int valida sin colocar datos\n");}
+    |                  TYPE_INT     IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA INT LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matiz tipo int valida agregando el primer dato\n");}
+    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz tipo flotante valida sin colocar datos\n");}
+    |                  TYPE_FLOAT   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA FLOTANTE LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matiz tipo float valida agregando el primer dato\n");}
+    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO {printf("\nDeclaracion de matriz tipo string valida sin colocar datos\n");}
+    |                  TYPE_STRING  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL LLAVE_ABIERTA LLAVE_ABIERTA STRING LLAVE_CERRADA LLAVE_CERRADA {printf("\nDeclaracion de matiz tipo string valida agregando el primer dato\n");}
     ;
 
-ASSIGNMENT_CAD     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL STRING {printf("\nAsignacion de vector valido");}
-    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL STRING {printf("\nAsignacion de matriz valido");}
+ASSIGNMENT_CAD     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL STRING {printf("\nAsignacion de vector tipo string valido\n");}
+    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL STRING {printf("\nAsignacion de matriz tipo string valida\n");}
     ;
 
-ASSIGNMENT_CAR     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL CHAR {printf("\nAsignacion de vector valido");}
-    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL CHAR {printf("\nAsignacion de matriz valido");}
+ASSIGNMENT_CAR     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL CHAR {printf("\nAsignacion de vector tipo char valido\n");}
+    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL CHAR {printf("\nAsignacion de matriz tipo char valida\n");}
     ;
 
-ASSIGNMENT_FLOAT   :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL FLOTANTE {printf("\nAsignacion de vector valido");}
-    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL FLOTANTE {printf("\nAsignacion de matriz valido");}
+ASSIGNMENT_FLOAT   :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL FLOTANTE {printf("\nAsignacion de vector tipo float valido\n");}
+    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL FLOTANTE {printf("\nAsignacion de matriz tipo float valida\n");}
     ;
 
-ASSIGNMENT_INT     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL INT {printf("\nAsignacion de vector valido");}
-    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL INT {printf("\nAsignacion de matriz valido");}
+ASSIGNMENT_INT     :   IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL INT {printf("\nAsignacion de vector tipo int valido\n");}
+    |                  IDENTIFICADOR CORCHETE_ABIERTO INT CORCHETE_CERRADO CORCHETE_ABIERTO INT CORCHETE_CERRADO IGUAL INT {printf("\nAsignacion de matriz tipo int valida\n");}
     ;
 %%
 
-int main_sint(void){
-    return yyparse();
+int main(int argc, char **argv){
+    FILE* InputFile = fopen("codigo.txt", "r");
+    if (!InputFile){ 
+        printf("\nEl archivo no se pudo abrir");
+        return 1;
+    }
+    yyin = InputFile;
+    yyparse();
+    printf("\nAnalisis Lexico - Sintactico");
+    fclose(InputFile);
+    return 0;
 }
+
 
 void yyerror (char *s) {printf("\nInstruccion invalida para el lenguaje\n");}
