@@ -21,7 +21,7 @@ PUNTO               ["."]
 IDENTIFICADOR       [a-zA-Z][_A-Za-z0-9]*
 FLOTANTE            {DIGITO}{0,8}{PUNTO}{DIGITO}{1,8}
 ENTERO              (-?[1-9]{DIGITO}{0,4})|0
-CARACTER            [a-zA-Z]
+CARACTER            ['][a-zA-Z][']
 CADENA              \"[^\n"]*\"
 PUNTO_Y_COMA        ";"
 
@@ -80,6 +80,7 @@ int funct_val_float_rango(char*ptr){
 }
 
 int yyerror_lexico(void){
+    printf("hola");
     printf("\nERROR DE LEXICO: CARACTER (%s) NO VALIDO. FINALIZANDO...\n", yytext);
     exit(1);
 }

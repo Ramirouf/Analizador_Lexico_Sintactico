@@ -81,7 +81,7 @@ int main(int argc, char **argv){
     }
     yyin = InputFile;
     yyparse();
-    printf("\nAnalisis Lexico - Sintactico");
+    printf("\nAnalisis Lexico - Sintactico finalizado");
     fclose(InputFile);
     return 0;
 }
